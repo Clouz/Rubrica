@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.IO;
 
 namespace Agenda
 {
@@ -25,18 +28,15 @@ namespace Agenda
 
         public MainWindow()
         {
-            List<User> users = new List<User>();
-            users.Add(new User() { Id = 1, Name = "John Doe", Department = "ELE", Phone = "00593" });
-            users.Add(new User() { Id = 2, Name = "john doe", Department = "STRUM", Phone = "00594" });
-            users.Add(new User() { Id = 3, Name = "Banana", Department = "ELE", Phone = "00595" });
+           string json = File.ReadAllText("rubrica.json");
 
+            
+            List<User> users = Deserialize(json);
 
             InitializeComponent();
             SearchBar.Focus();
             
             view = CollectionViewSource.GetDefaultView(users);
-
-
 
             DataGrid.ItemsSource = view;
         }
@@ -55,17 +55,23 @@ namespace Agenda
                 return u.Name.Contains(SearchBar.Text, comp) || u.Phone.Contains(SearchBar.Text, comp) || u.Department.Contains(SearchBar.Text, comp);
             };
         }
-    }
 
     public class User
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
-
         public string Department { get; set; }
-
         public string Phone { get; set; }
+    }
+
+    List<User> Deserialize(string json)
+    {
+        var options = new JsonSerializerOptions
+        {
+            AllowTrailingCommas = true
+        };
+
+        return JsonSerializer.Deserialize<List<User>>(json, options);
+    }
 
     }
 }
