@@ -28,15 +28,16 @@ namespace Agenda
 
         public MainWindow()
         {
-           string json = File.ReadAllText("rubrica.json");
+            string json = File.ReadAllText("rubrica.json");
 
-            
             List<User> users = Deserialize(json);
 
             InitializeComponent();
             SearchBar.Focus();
             
             view = CollectionViewSource.GetDefaultView(users);
+            view.SortDescriptions.Clear();
+            view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             DataGrid.ItemsSource = view;
         }
