@@ -56,6 +56,7 @@ namespace rubrica
 
         private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            view.Refresh();
             string json = Serialize(users);
             File.WriteAllText(filename, json);
             this.Close();
@@ -71,11 +72,53 @@ namespace rubrica
             };
         }
 
-        public class User
+        public class User : IDataErrorInfo
         {
+
             public string Name { get; set; }
             public string Department { get; set; }
             public string Phone { get; set; }
+
+            public string Error
+            {
+                get
+                {
+                    return String.Concat(this[Name], " ", this[Department], " ", this[Phone]);
+                }
+            }
+
+            public string this[string columnName]
+            {
+                get
+                {
+                    string errorMessage = null;
+                    switch (columnName)
+                    {
+                        case "Name":
+                            if (Name == null)
+                            {
+                                Name = "";
+                                errorMessage = "Name is required.";
+                            }
+                            break;
+                        case "Department":
+                            if (Department == null)
+                            {
+                                Department = "";
+                                errorMessage = "Department is required.";
+                            }
+                            break;
+                        case "Phone":
+                            if (Phone == null)
+                            {
+                                Phone = "";
+                                errorMessage = "Phone is required.";
+                            }
+                            break;
+                    }
+                    return errorMessage;
+                }
+            }
         }
 
         List<User> Deserialize(string json)
@@ -108,6 +151,11 @@ namespace rubrica
         }
 
         private void DataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+
+        }
+
+        private void DataGrid_AddingNewItem_1(object sender, AddingNewItemEventArgs e)
         {
 
         }
