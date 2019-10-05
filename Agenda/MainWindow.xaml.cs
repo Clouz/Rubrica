@@ -28,22 +28,16 @@ namespace Agenda
 
         public MainWindow()
         {
+            string json = File.ReadAllText("rubrica.json");
 
-            string text = File.ReadAllText(@"Rubrica.json", Encoding.UTF8);
-            
-
-            List<User> users = Deserialize(text);
-            //users.Add(new User() { Name = "John Doe", Department = "ELE", Phone = "00593" });
-            //users.Add(new User() { Name = "john doe", Department = "STRUM", Phone = "00594" });
-            //users.Add(new User() { Name = "Banana", Department = "ELE", Phone = "00595" });
-
+            List<User> users = Deserialize(json);
 
             InitializeComponent();
             SearchBar.Focus();
             
             view = CollectionViewSource.GetDefaultView(users);
-
-
+            view.SortDescriptions.Clear();
+            view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             DataGrid.ItemsSource = view;
         }
@@ -63,33 +57,22 @@ namespace Agenda
             };
         }
 
-        public class User
-        {
-            public string Name { get; set; }
-            public string Department { get; set; }
-            public string Phone { get; set; }
-        }
-
-        string Serialize(User value)
-        {
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true
-            };
-
-            return JsonSerializer.Serialize<User>(value, options);
-        }
-
-        List<User> Deserialize(string json)
-        {
-            var options = new JsonSerializerOptions
-            {
-                AllowTrailingCommas = true
-            };
-
-            return JsonSerializer.Deserialize<List<User>>(json, options);
-        }
+    public class User
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public string Phone { get; set; }
     }
 
+    List<User> Deserialize(string json)
+    {
+        var options = new JsonSerializerOptions
+        {
+            AllowTrailingCommas = true
+        };
 
+        return JsonSerializer.Deserialize<List<User>>(json, options);
+    }
+
+    }
 }
