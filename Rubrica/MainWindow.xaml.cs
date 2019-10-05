@@ -17,7 +17,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.IO;
 
-namespace Agenda
+namespace rubrica
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
