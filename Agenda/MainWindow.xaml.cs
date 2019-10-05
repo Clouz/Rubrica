@@ -25,12 +25,24 @@ namespace Agenda
     public partial class MainWindow : Window
     {
         ICollectionView view;
+        List<User> users;
+        string filename = "rubrica.json";
+        string json;
 
         public MainWindow()
         {
-            string json = File.ReadAllText("rubrica.json");
+            if (File.Exists(filename))
+            {
+                json = File.ReadAllText(filename);
+                users = Deserialize(json);
+            }
+            else
+            {
+                File.Create(filename);
+                users = new List<User> { new User { Name = "", Department = "", Phone = "" } };
+            }
+            
 
-            List<User> users = Deserialize(json);
 
             InitializeComponent();
             SearchBar.Focus();
@@ -44,6 +56,8 @@ namespace Agenda
 
         private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            string json = Serialize(users);
+            File.WriteAllText(filename, json);
             this.Close();
         }
 
@@ -57,22 +71,45 @@ namespace Agenda
             };
         }
 
-    public class User
-    {
-        public string Name { get; set; }
-        public string Department { get; set; }
-        public string Phone { get; set; }
-    }
-
-    List<User> Deserialize(string json)
-    {
-        var options = new JsonSerializerOptions
+        public class User
         {
-            AllowTrailingCommas = true
-        };
+            public string Name { get; set; }
+            public string Department { get; set; }
+            public string Phone { get; set; }
+        }
 
-        return JsonSerializer.Deserialize<List<User>>(json, options);
-    }
+        List<User> Deserialize(string json)
+        {
+            var options = new JsonSerializerOptions
+            {
+                AllowTrailingCommas = true
+            };
 
+            try
+            {
+                return JsonSerializer.Deserialize<List<User>>(json, options);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Unable to read rubrica.json", "Error",MessageBoxButton.OK,MessageBoxImage.Error);
+                throw;
+            }
+        }
+
+        string Serialize(List<User> u)
+        {
+            var options = new JsonSerializerOptions
+            {
+                AllowTrailingCommas = true,
+                WriteIndented = true
+            };
+
+            return JsonSerializer.Serialize<List<User>>(u, options);
+        }
+
+        private void DataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+
+        }
     }
 }
