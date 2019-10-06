@@ -41,10 +41,10 @@ namespace rubrica
                 File.Create(filename);
                 users = new List<User> { new User { Name = "", Department = "", Phone = "" } };
             }
-            
 
 
             InitializeComponent();
+            flag.Visibility = Visibility.Collapsed;
             SearchBar.Focus();
             
             view = CollectionViewSource.GetDefaultView(users);
@@ -64,12 +64,54 @@ namespace rubrica
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            StringComparison comp = StringComparison.OrdinalIgnoreCase;
-            view.Filter = o =>
+            StringComparison comp;
+            switch (true)
             {
-                User u = o as User;
-                return u.Name.Contains(SearchBar.Text, comp) || u.Phone.Contains(SearchBar.Text, comp) || u.Department.Contains(SearchBar.Text, comp);
-            };
+                case true when SearchBar.Text.ToLower() == "name: " || SearchBar.Text.ToLower() == "dep: " || SearchBar.Text.ToLower() == "phone: ":
+                    flag.Visibility = Visibility.Visible;
+                    flag.Content = SearchBar.Text.ToLower().Substring(0, SearchBar.Text.Length - 2);
+                    SearchBar.Text = "";
+                    break;
+                case true when flag.Visibility == Visibility.Visible:
+                    comp = StringComparison.OrdinalIgnoreCase;
+                    view.Filter = o =>
+                    {
+                        User u = o as User;
+                        switch (flag.Content.ToString())
+                        {
+                            case "name":
+                                return u.Name.Contains(SearchBar.Text, comp);
+                                break;
+                            case "dep":
+                                return u.Department.Contains(SearchBar.Text, comp);
+                                break;
+                            case "phone":
+                                return u.Phone.Contains(SearchBar.Text, comp);
+                                break;
+                            default:
+                                return true;
+                                break;
+                        }
+                    };
+                    break;
+                default:
+                    comp = StringComparison.OrdinalIgnoreCase;
+                    view.Filter = o =>
+                    {
+                        User u = o as User;
+                        return u.Name.Contains(SearchBar.Text, comp) || u.Phone.Contains(SearchBar.Text, comp) || u.Department.Contains(SearchBar.Text, comp);
+                    };
+                    break;
+            }
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Back && flag.Visibility == Visibility.Visible && SearchBar.Text == "")
+            {
+                e.Handled = true;
+                flag.Visibility = Visibility.Collapsed;
+            }
         }
 
         public class User : IDataErrorInfo

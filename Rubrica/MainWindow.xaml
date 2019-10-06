@@ -15,15 +15,15 @@
     
     <Window.Resources>
         <Style TargetType="TextBox" x:Key="Textbox1">
-            <Setter Property="Padding" Value="7"/>
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
             <Setter Property="Foreground" Value="#000"/>
             <Setter Property="MinHeight" Value="20"/>
             <Setter Property="MinWidth" Value="150"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border x:Name="border" CornerRadius="5" BorderBrush="#000" BorderThickness="1" Background="#fff">
+                        <Border x:Name="border" CornerRadius="5" BorderBrush="#000" BorderThickness="0" >
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -35,6 +35,23 @@
                             <Trigger Property="IsFocused" Value="true">
                                 <Setter Property="Foreground" Value="Black" />
                                 <Setter Property="BorderBrush" TargetName="border" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style  x:Key="MyLabelStyle" TargetType="Label">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -55,8 +72,13 @@
                 <DataGridTextColumn Header="Dep" Binding="{Binding Department, ValidatesOnDataErrors=True}" MinWidth="50" Width="auto"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, ValidatesOnDataErrors=True}" Width="*" />
             </DataGrid.Columns>
-        </DataGrid>
-        <TextBox x:Name="SearchBar" Grid.Row="1" Margin="5" TextChanged="SearchBar_TextChanged" VerticalContentAlignment="Center" Style="{StaticResource Textbox1}"/>
+        </DataGrid >
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" CornerRadius="5" Margin="5" >
+            <DockPanel Margin="1" >
+                <Label  Padding="0 2 2 2" Margin="2" Style="{StaticResource MyLabelStyle}" DockPanel.Dock="Left" x:Name="flag" Background="#cce5ff" BorderThickness="1" BorderBrush="#b8daff" Foreground="#004085" >xxx</Label>
+                <TextBox Padding="0 5 0 5" Style="{StaticResource Textbox1}" DockPanel.Dock="Right"  x:Name="SearchBar" MinHeight="20" TextChanged="SearchBar_TextChanged" VerticalContentAlignment="Center" Margin="1 0 0 0" BorderThickness="0" BorderBrush="Transparent" PreviewKeyDown="OnKeyDownHandler"/>
+            </DockPanel>
+        </Border>
     </Grid>
     
     
