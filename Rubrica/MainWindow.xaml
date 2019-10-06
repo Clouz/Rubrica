@@ -75,7 +75,7 @@
         </DataGrid >
         <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" CornerRadius="5" Margin="5" >
             <DockPanel Margin="1" >
-                <Label  Padding="0 2 2 2" Margin="2" Style="{StaticResource MyLabelStyle}" DockPanel.Dock="Left" x:Name="flag" Background="#cce5ff" BorderThickness="1" BorderBrush="#b8daff" Foreground="#004085" >xxx</Label>
+                <Label  Padding="2 2 2 2" Margin="2" Style="{StaticResource MyLabelStyle}" DockPanel.Dock="Left" x:Name="flag" Background="#cce5ff" BorderThickness="1" BorderBrush="#b8daff" Foreground="#004085" >xxx</Label>
                 <TextBox Padding="0 5 0 5" Style="{StaticResource Textbox1}" DockPanel.Dock="Right"  x:Name="SearchBar" MinHeight="20" TextChanged="SearchBar_TextChanged" VerticalContentAlignment="Center" Margin="1 0 0 0" BorderThickness="0" BorderBrush="Transparent" PreviewKeyDown="OnKeyDownHandler"/>
             </DockPanel>
         </Border>
