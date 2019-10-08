@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Rubrica" Height="600" Width="500">
+        Title="Rubrica" Height="600" Width="500"
+        Closed="Window_Closed">
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="OnCloseExecuted" />
     </Window.CommandBindings>
@@ -66,7 +67,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <DataGrid x:Name="DataGrid" Grid.Row="0" Margin="5,5,5,0" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="True" ItemsSource="{Binding User}" >
+        <DataGrid x:Name="DataGrid" Grid.Row="0" Margin="5,5,5,0" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="True" ItemsSource="{Binding User}" BorderBrush="Black">
+            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Phone" Binding="{Binding Phone, ValidatesOnDataErrors=True}" MinWidth="70" Width="auto"/>
                 <DataGridTextColumn Header="Dep" Binding="{Binding Department, ValidatesOnDataErrors=True}" MinWidth="50" Width="auto"/>

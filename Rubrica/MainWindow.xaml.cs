@@ -54,12 +54,17 @@ namespace rubrica
             DataGrid.ItemsSource = view;
         }
 
-        private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        private void ExitFuncion()
         {
             view.Refresh();
             string json = Serialize(users);
             File.WriteAllText(filename, json);
             this.Close();
+        }
+
+        private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            ExitFuncion();
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
@@ -192,14 +197,12 @@ namespace rubrica
             return JsonSerializer.Serialize<List<User>>(u, options);
         }
 
-        private void DataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
-        {
 
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            ExitFuncion();
         }
 
-        private void DataGrid_AddingNewItem_1(object sender, AddingNewItemEventArgs e)
-        {
-
-        }
     }
 }
