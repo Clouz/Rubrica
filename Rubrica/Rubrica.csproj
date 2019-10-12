@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <None Update="menu.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="rubrica.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
