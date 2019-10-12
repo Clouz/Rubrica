@@ -74,7 +74,7 @@ namespace rubrica
             {
                 case true when SearchBar.Text.ToLower() == "name: " || SearchBar.Text.ToLower() == "dep: " || SearchBar.Text.ToLower() == "phone: ":
                     flag.Visibility = Visibility.Visible;
-                    flag.Content = SearchBar.Text.ToLower().Substring(0, SearchBar.Text.Length - 2);
+                    flag.Content = SearchBar.Text.ToUpper().Substring(0, SearchBar.Text.Length - 2);
                     SearchBar.Text = "";
                     break;
                 case true when flag.Visibility == Visibility.Visible:
@@ -84,18 +84,14 @@ namespace rubrica
                         User u = o as User;
                         switch (flag.Content.ToString())
                         {
-                            case "name":
+                            case "NAME":
                                 return u.Name.Contains(SearchBar.Text, comp);
-                                break;
-                            case "dep":
+                            case "DEP":
                                 return u.Department.Contains(SearchBar.Text, comp);
-                                break;
-                            case "phone":
+                            case "PHONE":
                                 return u.Phone.Contains(SearchBar.Text, comp);
-                                break;
                             default:
                                 return true;
-                                break;
                         }
                     };
                     break;
@@ -204,5 +200,14 @@ namespace rubrica
             ExitFuncion();
         }
 
+        private void menu_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("click!!!");
+        }
+
+        private void OnFocusExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            SearchBar.Focus();
+        }
     }
 }

@@ -8,10 +8,12 @@
         Closed="Window_Closed">
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="OnCloseExecuted" />
+        <CommandBinding Command="Focus" Executed="OnFocusExecuted" />
     </Window.CommandBindings>
     
     <Window.InputBindings>
         <KeyBinding Key="Esc" Command="Close" />
+        <KeyBinding Modifiers="Ctrl" Key="f" Command="Focus" />
     </Window.InputBindings>
     
     <Window.Resources>
@@ -67,20 +69,24 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <DataGrid x:Name="DataGrid" Grid.Row="0" Margin="5,5,5,0" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="True" ItemsSource="{Binding User}" BorderBrush="Black">
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="30" />
+        </Grid.ColumnDefinitions>
+        <DataGrid  x:Name="DataGrid" Grid.ColumnSpan="2" Grid.Row="0" Margin="5,5,5,0" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="True" ItemsSource="{Binding User}" BorderBrush="Black" BorderThickness="1.2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Phone" Binding="{Binding Phone, ValidatesOnDataErrors=True}" MinWidth="70" Width="auto"/>
                 <DataGridTextColumn Header="Dep" Binding="{Binding Department, ValidatesOnDataErrors=True}" MinWidth="50" Width="auto"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, ValidatesOnDataErrors=True}" Width="*" />
             </DataGrid.Columns>
         </DataGrid >
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" CornerRadius="5" Margin="5" >
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" CornerRadius="5" Margin="5 5 0 5" >
             <DockPanel Margin="1" >
-                <Label  Padding="2 2 2 2" Margin="2" Style="{StaticResource MyLabelStyle}" DockPanel.Dock="Left" x:Name="flag" Background="#cce5ff" BorderThickness="1" BorderBrush="#b8daff" Foreground="#004085" >xxx</Label>
+                <Label  Padding="4 2 4 2" Margin="2" Style="{StaticResource MyLabelStyle}" DockPanel.Dock="Left" x:Name="flag" Background="#cce5ff" BorderThickness="1" BorderBrush="#b8daff" Foreground="#004085" >XXX</Label>
                 <TextBox Padding="0 5 0 5" Style="{StaticResource Textbox1}" DockPanel.Dock="Right"  x:Name="SearchBar" MinHeight="20" TextChanged="SearchBar_TextChanged" VerticalContentAlignment="Center" Margin="1 0 0 0" BorderThickness="0" BorderBrush="Transparent" PreviewKeyDown="OnKeyDownHandler"/>
             </DockPanel>
         </Border>
+        <Image x:Name="menu" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Source="/menu.png" Visibility="Visible" MouseDown="menu_MouseDown"/>
     </Grid>
     
     
