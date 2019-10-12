@@ -210,5 +210,13 @@ namespace rubrica
             MessageBox.Show("click!!!");
 
         }
+
+        private void OnNewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            int i = DataGrid.Items.Count - 1;
+
+            DataGrid.CurrentCell = new DataGridCellInfo(DataGrid.Items[i], DataGrid.Columns[0]);
+            DataGrid.BeginEdit();
+        }
     }
 }

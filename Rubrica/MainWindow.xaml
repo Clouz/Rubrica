@@ -9,11 +9,13 @@
     <Window.CommandBindings>
         <CommandBinding  Command="ApplicationCommands.Close" Executed="OnCloseExecuted" />
         <CommandBinding Command="ApplicationCommands.Find" Executed="OnFocusExecuted" />
+        <CommandBinding Command="ApplicationCommands.New" Executed="OnNewExecuted" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
-        <KeyBinding Key="Esc" Command="ApplicationCommands.Close" CommandParameter="esc"/>
-        <KeyBinding Modifiers="Ctrl" Key="f" Command="ApplicationCommands.Find"  CommandParameter="focus"/>
+        <KeyBinding Key="Esc" Command="ApplicationCommands.Close"/>
+        <KeyBinding Modifiers="Ctrl" Key="f" Command="ApplicationCommands.Find"/>
+        <KeyBinding Modifiers="Ctrl" Key="n" Command="ApplicationCommands.New"/>
     </Window.InputBindings>
     
     <Window.Resources>
@@ -72,6 +74,13 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
+        <Style TargetType="{x:Type Menu}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="White" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
     </Window.Resources>
 
  
@@ -91,17 +100,18 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, ValidatesOnDataErrors=True}" Width="*" />
             </DataGrid.Columns>
         </DataGrid >
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" CornerRadius="5" Margin="5 5 0 5" >
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" CornerRadius="5" Margin="5 5 5 5" >
             <DockPanel Margin="1" >
                 <Label  Padding="4 2 4 2" Margin="2" Style="{StaticResource MyLabelStyle}" DockPanel.Dock="Left" x:Name="flag" Background="#cce5ff" BorderThickness="1" BorderBrush="#b8daff" Foreground="#004085" >XXX</Label>
                 <TextBox Padding="0 5 0 5" Style="{StaticResource Textbox1}" DockPanel.Dock="Right"  x:Name="SearchBar" MinHeight="20" TextChanged="SearchBar_TextChanged" VerticalContentAlignment="Center" Margin="1 0 0 0" BorderThickness="0" BorderBrush="Transparent" PreviewKeyDown="OnKeyDownHandler"/>
             </DockPanel>
         </Border>
        
-        <Menu Grid.Row="1" Grid.Column="2" >
+        <Menu Grid.Row="1" Grid.Column="2" Margin="0 0 6 0">
 
-            <MenuItem Header="M" Height="40" Width="30" >
-                <MenuItem Header="_Exit" Command="ApplicationCommands.Close"/>
+            <MenuItem Header="M" Height="30" >
+                <MenuItem Header="_New"  Command="New"/>
+                <MenuItem Header="_Exit" Command="Close"/>
             </MenuItem>
         </Menu>
      </Grid>
