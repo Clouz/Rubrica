@@ -7,13 +7,13 @@
         Title="Rubrica" Height="600" Width="500"
         Closed="Window_Closed">
     <Window.CommandBindings>
-        <CommandBinding Command="Close" Executed="OnCloseExecuted" />
-        <CommandBinding Command="Focus" Executed="OnFocusExecuted" />
+        <CommandBinding  Command="ApplicationCommands.Close" Executed="OnCloseExecuted" />
+        <CommandBinding Command="ApplicationCommands.Find" Executed="OnFocusExecuted" />
     </Window.CommandBindings>
-    
+
     <Window.InputBindings>
-        <KeyBinding Key="Esc" Command="Close" />
-        <KeyBinding Modifiers="Ctrl" Key="f" Command="Focus" />
+        <KeyBinding Key="Esc" Command="ApplicationCommands.Close" CommandParameter="esc"/>
+        <KeyBinding Modifiers="Ctrl" Key="f" Command="ApplicationCommands.Find"  CommandParameter="focus"/>
     </Window.InputBindings>
     
     <Window.Resources>
@@ -61,6 +61,17 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="{x:Type MenuItem}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="White" />
+            <Style.Triggers>
+                <Trigger Property="IsHighlighted" Value="true">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="BorderBrush" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
  
@@ -86,8 +97,14 @@
                 <TextBox Padding="0 5 0 5" Style="{StaticResource Textbox1}" DockPanel.Dock="Right"  x:Name="SearchBar" MinHeight="20" TextChanged="SearchBar_TextChanged" VerticalContentAlignment="Center" Margin="1 0 0 0" BorderThickness="0" BorderBrush="Transparent" PreviewKeyDown="OnKeyDownHandler"/>
             </DockPanel>
         </Border>
-        <Image x:Name="menu" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Source="/menu.png" Visibility="Visible" MouseDown="menu_MouseDown"/>
-    </Grid>
+       
+        <Menu Grid.Row="1" Grid.Column="2" >
+
+            <MenuItem Header="M" Height="40" Width="30" >
+                <MenuItem Header="_Exit" Command="ApplicationCommands.Close"/>
+            </MenuItem>
+        </Menu>
+     </Grid>
     
     
 </Window>

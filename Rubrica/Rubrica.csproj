@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="menu.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="rubrica.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

@@ -200,14 +200,15 @@ namespace rubrica
             ExitFuncion();
         }
 
-        private void menu_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("click!!!");
-        }
-
         private void OnFocusExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             SearchBar.Focus();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("click!!!");
+
         }
     }
 }
