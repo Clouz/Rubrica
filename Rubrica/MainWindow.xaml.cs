@@ -57,8 +57,11 @@ namespace rubrica
         private void ExitFuncion()
         {
             view.Refresh();
-            string json = Serialize(users);
-            File.WriteAllText(filename, json);
+            string NewJson = Serialize(users);
+            if (NewJson != json)
+            {
+                File.WriteAllText(filename, NewJson);
+            }
             this.Close();
         }
 
